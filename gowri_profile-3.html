@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gowri – My Journey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --forest: #2D5A3D;
+      --moss:   #4A7C59;
+      --fern:   #7FB069;
+      --bark:   #3B2F2F;
+      --cream:  #F7F3EC;
+      --gold:   #C9A84C;
+    }
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--bark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 10% 20%, rgba(127,176,105,.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 90% 80%, rgba(45,90,61,.10) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      border: 1px solid rgba(127,176,105,.25);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .leaf-ring {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      border: 1px dashed rgba(74,124,89,.15);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .avatar {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--moss), var(--fern));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; color: #fff;
+      margin-bottom: 24px;
+      position: relative; z-index: 2;
+      box-shadow: 0 8px 32px rgba(45,90,61,.25);
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      color: var(--forest);
+      position: relative; z-index: 2;
+    }
+    .hero .tagline {
+      margin-top: 10px; font-size: 1rem; font-weight: 300;
+      color: var(--moss); letter-spacing: .12em;
+      text-transform: uppercase;
+      position: relative; z-index: 2;
+    }
+    .divider {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; padding: 0 24px;
+      position: relative; z-index: 1;
+    }
+    .divider span {
+      height: 1px; flex: 1; max-width: 160px;
+      background: linear-gradient(to right, transparent, var(--fern), transparent);
+    }
+    .divider svg { fill: var(--gold); width: 22px; }
+    .section-heading {
+      position: relative; z-index: 1;
+      text-align: center; padding: 32px 24px 12px;
+    }
+    .section-heading p {
+      font-size: .72rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--fern); font-weight: 400;
+    }
+    .section-heading h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; color: var(--forest); margin-top: 6px;
+    }
+    .cards {
+      position: relative; z-index: 1;
+      display: flex; flex-wrap: wrap;
+      gap: 20px; justify-content: center;
+      padding: 24px 24px 48px;
+      max-width: 820px; margin: 0 auto;
+    }
+    .card {
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(127,176,105,.3);
+      border-radius: 18px; padding: 36px 32px;
+      flex: 1 1 300px; max-width: 380px;
+      transition: transform .25s ease, box-shadow .25s ease;
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute; top: -30px; right: -30px;
+      width: 100px; height: 100px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(127,176,105,.18), transparent 70%);
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(45,90,61,.15); }
+    .card-icon { font-size: 2rem; margin-bottom: 14px; }
+    .card-label {
+      font-size: .72rem; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--fern);
+      font-weight: 400; margin-bottom: 6px;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; color: var(--forest); line-height: 1.4;
+    }
+    .card-sub { margin-top: 6px; font-size: .9rem; font-weight: 300; color: #555; }
+    .footer-quote {
+      position: relative; z-index: 1;
+      text-align: center; padding: 0 24px 60px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 1.05rem; color: var(--moss);
+    }
+    .leaf {
+      position: fixed; top: -60px; font-size: 1.5rem;
+      opacity: 0; animation: fall linear infinite;
+      pointer-events: none; z-index: 0;
+    }
+    @keyframes fall {
+      0%   { opacity: .6; transform: translateY(0) rotate(0deg); }
+      100% { opacity: 0;  transform: translateY(105vh) rotate(360deg); }
+    }
+    @media (max-width: 520px) { .card { padding: 28px 22px; } }
+  </style>
+</head>
+<body>
+
+  <script>
+    const emojis = ['🍃','🌿','🍀','🌱'];
+    for (let i = 0; i < 14; i++) {
+      const el = document.createElement('div');
+      el.className = 'leaf';
+      el.textContent = emojis[i % emojis.length];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (8 + Math.random() * 10) + 's';
+      el.style.animationDelay = (Math.random() * 12) + 's';
+      el.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+      document.body.appendChild(el);
+    }
+  </script>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="leaf-ring"></div>
+    <div class="avatar">G</div>
+    <h1>Gowri</h1>
+    <p class="tagline">Growing · Learning · Blooming</p>
+  </section>
+
+  <!-- Education Divider -->
+  <div class="divider">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-8 8"/></svg>
+    <span></span>
+  </div>
+
+  <!-- Education Section -->
+  <div class="section-heading">
+    <p>Academic Path</p>
+    <h2>Education</h2>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🌸</div>
+      <div class="card-label">Where it all began</div>
+      <div class="card-title">St. Mary's Girls Higher Secondary School</div>
+      <div class="card-sub">Completed schooling here — the roots of my journey.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌳</div>
+      <div class="card-label">Currently blossoming at</div>
+      <div class="card-title">R.D. National College</div>
+      <div class="card-sub">Reaching new heights as a college student today.</div>
+    </div>
+  </div>
+
+  <!-- Marks Divider -->
+  <div class="divider">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-8 8"/></svg>
+    <span></span>
+  </div>
+
+  <!-- Academic Marks Section -->
+  <div class="section-heading">
+    <p>Academic Performance</p>
+    <h2>Scores</h2>
+  </div>
+
+  <div style="position:relative;z-index:1;max-width:640px;margin:0 auto;padding:16px 24px 48px;">
+
+    <!-- 10th -->
+    <div style="background:rgba(255,255,255,.72);backdrop-filter:blur(6px);border:1px solid rgba(127,176,105,.3);border-radius:18px;padding:30px 32px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div style="font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fern);margin-bottom:4px;">10th Standard</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--forest);">Score</div>
+        </div>
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--forest);font-weight:600;">90.4%</div>
+      </div>
+      <div style="background:#e0eed8;border-radius:99px;height:10px;overflow:hidden;">
+        <div style="width:90.4%;height:100%;background:linear-gradient(to right,var(--moss),var(--fern));border-radius:99px;"></div>
+      </div>
+    </div>
+
+    <!-- 12th -->
+    <div style="background:rgba(255,255,255,.72);backdrop-filter:blur(6px);border:1px solid rgba(127,176,105,.3);border-radius:18px;padding:30px 32px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <div style="font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fern);margin-bottom:4px;">12th Standard</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--forest);">Score</div>
+        </div>
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--forest);font-weight:600;">92.3%</div>
+      </div>
+      <div style="background:#e0eed8;border-radius:99px;height:10px;overflow:hidden;">
+        <div style="width:92.3%;height:100%;background:linear-gradient(to right,var(--moss),var(--fern));border-radius:99px;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Hobbies Divider -->
+  <div class="divider">
+    <span></span>
+    <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2-8 8"/></svg>
+    <span></span>
+  </div>
+
+  <!-- Hobbies Section -->
+  <div class="section-heading">
+    <p>What I Love to Do</p>
+    <h2>Hobbies</h2>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🎨</div>
+      <div class="card-label">Creative expression</div>
+      <div class="card-title">Drawing</div>
+      <div class="card-sub">Bringing imagination to life, one stroke at a time — like painting nature on a canvas.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎵</div>
+      <div class="card-label">Soul's language</div>
+      <div class="card-title">Listening to Songs</div>
+      <div class="card-sub">Music flows through me like a gentle breeze through the trees — calming and inspiring.</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <p class="footer-quote">"Like a seed that finds its way to the sun — always growing."</p>
+
+</body>
+</html>
